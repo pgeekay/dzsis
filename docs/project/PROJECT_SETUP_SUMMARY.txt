@@ -1,0 +1,186 @@
+================================================================================
+OPENSIS CLASSIC - CALIFORNIA TK-8 EXTENSION PROJECT
+Project Setup & Documentation Summary
+================================================================================
+
+PROJECT OVERVIEW
+================================================================================
+Objective: Extend OpenSIS Classic Community Edition to support California TK-8
+Student Information System requirements, with focus on CALPADS compliance.
+
+Platform: OpenSIS Classic Community Edition (PHP 8.x + MySQL 8.0 + Apache 2.4+)
+Status: Planning Phase (Initial documentation complete)
+Target: Phased development with 13 phases
+
+DOCUMENTATION STRUCTURE
+================================================================================
+
+1. CLAUDE.md
+   Purpose: Development guidance for Claude Code (and future developers)
+   Contents:
+   - Project overview & requirements
+   - High-level architecture (module-based PHP system)
+   - Core files & responsibilities
+   - Development guidelines (modules, database, session, CSRF, localization)
+   - Common development tasks
+   - Testing & deployment procedures
+
+2. Context.MD
+   Purpose: Master requirements & feasibility analysis
+   Contents:
+   - California TK-8 SIS requirements by domain
+   - OpenSIS feature mapping to requirements
+   - Gap analysis
+   - Recommended extension architecture
+   - Proposed California extension tables
+   - OpenSIS evaluation checklist
+   - Feasibility assessment
+   - Sequential action plan (10 phases)
+   - Success criteria
+   - Key recommendations
+
+3. PROJECT_PLAN.md
+   Purpose: Operational development plan with phases, tasks, tests
+   Contents:
+   - 13 detailed development phases
+   - For each phase:
+     * Development tasks with deliverables
+     * Test cases with inputs/outputs
+     * Test data specifications
+     * Documentation requirements
+     * Regression testing checklist
+     * Success criteria
+   - Regression testing across all phases
+   - Test data management strategy
+   - Success metrics
+   - Documentation deliverables index
+   - Version control & branching strategy
+   - Risk mitigation plan
+
+KEY PRINCIPLES
+================================================================================
+1. Extension Layer: All California enhancements are "extension" tables, not
+   modifications to OpenSIS core tables. This preserves upgrade path.
+
+2. Incremental Development: 13 phases, each with testable deliverables.
+   Tests and documentation updated with each phase.
+
+3. Data Separation: OpenSIS core data separate from CA extension data,
+   linked via foreign keys.
+
+4. Validation First: Comprehensive validation before data save and before
+   CALPADS extract generation.
+
+5. Effective Dating: All California records support effective-dated history.
+
+ARCHITECTURE SUMMARY
+================================================================================
+
+Extension Layer Pattern:
+  OpenSIS Core Tables (unchanged)
+            ↓
+  California Extension Tables (ca_* prefix)
+            ↓
+  Validation Layer (validation rules + result storage)
+            ↓
+  CALPADS Extract Generator (SENR, SINF, SPRG, SELA, STAS)
+            ↓
+  CSV/API Export (for external systems)
+
+California Extension Tables (by domain):
+  Student:      ca_student_profile, ca_student_demographic_history,
+                ca_student_language, ca_student_guardian_education
+  Enrollment:   ca_student_enrollment, ca_enrollment_status_history,
+                ca_enrollment_code_map, ca_school_year_calendar
+  Programs:     ca_program, ca_student_program, ca_student_program_history
+  Attendance:   ca_attendance_code_map, ca_daily_attendance_summary
+  Discipline:   ca_discipline_incident, ca_discipline_student_incident,
+                ca_discipline_action
+  CALPADS:      ca_calpads_extract_batch, ca_calpads_extract_file,
+                ca_calpads_validation_rule, ca_calpads_validation_result
+
+Code Sets Framework:
+  ca_code_set:       Defines code domains (GradeLevel, Gender, etc.)
+  ca_code_value:     Valid values for each code domain
+  ca_code_crosswalk: Maps OpenSIS values to California values
+
+PHASE SEQUENCE
+================================================================================
+Phase 1:  Install & Baseline (1-2 weeks)
+Phase 2:  Data Model Design (2-3 weeks)
+Phase 3:  California Code Sets (2 weeks)
+Phase 4:  Student Demographics (3 weeks)
+Phase 5:  Enrollment History (3 weeks)
+Phase 6:  Program Participation (3 weeks)
+Phase 7:  English Learner Status (2 weeks)
+Phase 8:  Attendance Extension (2 weeks)
+Phase 9:  Discipline Module (3 weeks)
+Phase 10: Validation Layer (4 weeks)
+Phase 11: CALPADS Extraction (4 weeks)
+Phase 12: Data Export & Reporting (2 weeks)
+Phase 13: Testing & Pilot (4-6 weeks)
+
+Total Estimated Duration: 35-41 weeks (~8-10 months)
+
+QUICK START
+================================================================================
+
+For Development Team:
+1. Read CLAUDE.md first (understand architecture)
+2. Read Context.MD (understand requirements)
+3. Review PROJECT_PLAN.md phases in order
+4. Start Phase 1 (Install & Baseline)
+
+For Project Managers:
+1. Review Context.MD (Section 11 - Sequential Action Plan)
+2. Review PROJECT_PLAN.md (phase durations, deliverables)
+3. Use phase timelines for scheduling
+4. Track success criteria per phase
+
+For Testing/QA:
+1. Review PROJECT_PLAN.md (Test Cases section in each phase)
+2. Review Regression Testing Checklist
+3. Review Test Data Management section
+4. Prepare test environments per phase
+
+DOCUMENTATION LOCATIONS
+================================================================================
+
+In Repository (/dzsis/):
+  - CLAUDE.md                  (Developer guidance)
+  - Context.MD                 (Requirements & feasibility)
+  - PROJECT_PLAN.md            (Detailed implementation plan)
+  - /docs/                     (Phase-specific documentation created during work)
+
+Test Data:
+  - test_data_phase{N}.sql     (Created per phase)
+
+Version Control:
+  - main branch                (Production-ready code)
+  - develop branch             (Integration)
+  - feature/phase-{N}-*        (Phase-specific branches)
+
+NEXT STEPS
+================================================================================
+
+1. Review & Approve PROJECT_PLAN.md
+2. Assign development resources
+3. Set up development environments (PHP 8.x, MySQL 8.0)
+4. Begin Phase 1: Install & Baseline
+5. Create Phase 1 test data and documentation
+6. Establish testing schedule
+
+REFERENCES
+================================================================================
+
+Context.MD:        Master requirements and feasibility analysis
+PROJECT_PLAN.md:   Detailed phase-by-phase implementation plan
+CLAUDE.md:         Architecture and development guidelines
+
+Contact/Questions:  See PROJECT_PLAN.md Section "Questions & Next Steps"
+
+================================================================================
+Generated: 2026-05-07
+Status: Initial Planning Phase Complete
+Ready for: Phase 1 Kickoff
+================================================================================
